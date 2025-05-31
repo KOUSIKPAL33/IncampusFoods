@@ -1,0 +1,10 @@
+[
+    {
+      "filterName": "Category",
+      "values": ["Biryani", "Fried_Rice", "Noodles", "Omelettes"]
+    },
+    {
+      "filterName": "Name",
+      "values": ["Paneer", "Cheese", "Egg", "Chicken"]
+    }
+]
