@@ -36,7 +36,6 @@ function ShowData({ apiEndpoint, shopName }) {
       setFoodItem(response[0]);
       setFilters(response[1]);
     } catch (error) {
-      <Error404/>
       console.error("Error loading data:", error);
     }
   };
@@ -130,6 +129,7 @@ function ShowData({ apiEndpoint, shopName }) {
                             {shopName=="dominos"?(  
                                 <CardDominos
                                 pid={item._id}
+                                shopname={item.Shop_name}
                                 name={item.Name}
                                 options={item.Options}
                                 imgSrc={item.Image}
@@ -137,6 +137,7 @@ function ShowData({ apiEndpoint, shopName }) {
                             ):(
                             <Card
                               pid={item._id}
+                              shopname={item.Shop_name}
                               name={item.Name}
                               price={item.Price}
                               imgSrc={item.Image}

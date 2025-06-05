@@ -14,6 +14,8 @@ const Navbar = () => {
   const token = localStorage.getItem("authToken");
   const { cart, dispatch } = useContext(cartcontext)
   const { user, dispatchUser } = useContext(userContext)
+  const [showProfile, setShowProfile] = useState(false);
+
   const navigate = useNavigate();
 
   const [isLoggedIn, setIsLoggedIn] = useState(
@@ -39,7 +41,7 @@ const Navbar = () => {
     setShowModal(false);
     navigate("/");
   };
-  
+
 
   useEffect(() => {
     const fetchUserDetails = async () => {
@@ -61,6 +63,7 @@ const Navbar = () => {
               payload: {
                 name: data.name,
                 mobile: data.mobileno,
+                email:data.email,
                 addresses: data.addresses,
               },
             });
@@ -74,6 +77,22 @@ const Navbar = () => {
     };
     fetchUserDetails();
   }, [isLoggedIn]);
+
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      // Check if click was outside the profile dropdown or button
+      if (!e.target.closest(".profile-toggle")) {
+        setShowProfile(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
 
   return (
     <>
@@ -102,23 +121,40 @@ const Navbar = () => {
 
             {!token ? (
               <div className="d-flex gap-1">
-              <button className="btn btn-secondary" onClick={() => toggleModal("signup")}>Sign Up</button>
-              <button className="btn btn-primary" onClick={() => toggleModal("login")}>Login</button>
-              <button className="btn btn-danger" onClick={() => toggleModal("adminLogin")}>Admin</button>
+                <button className="btn btn-secondary" onClick={() => toggleModal("signup")}>Sign Up</button>
+                <button className="btn btn-primary" onClick={() => toggleModal("login")}>Login</button>
+                <button className="btn btn-danger" onClick={() => toggleModal("adminLogin")}>Admin</button>
               </div>
             ) : (
               <div>
                 <ul className="mt-2 d-flex gap-2">
-                  <li className="btn btn-outline-light me-2 position-relative">
-                    {user.name.split(" ")[0].trim()}
-                  </li>
                   <li className="position-relative">
-                    <Link className="btn btn-outline-light me-2" to="/Mycart">Cart</Link>
+                    <Link className="btn btn-outline-light me-2" to="/Mycart">🛒Cart</Link>
                     <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
                       {cart.length}
                     </span>
                   </li>
-                  <li className="btn btn-danger" onClick={handleLogout}>Logout</li>
+                  <li className="position-relative profile-toggle">
+                    <button
+                      className="btn btn-outline-light me-2"
+                      onClick={() => setShowProfile(!showProfile)}
+                    >
+                      {user.name.split(" ")[0].trim()}
+                    </button>
+
+                    {showProfile && (
+                      <div
+                        className="position-absolute top-100 end-0 bg-white border rounded shadow-sm text-dark mt-3"
+                        style={{ minWidth: "200px", zIndex: 10 }}
+                      >
+                        <Link className="btn btn-light w-100" to="  ">My Profile</Link>
+                        <Link className="btn btn-light w-100" to="/Myorders">My Orders</Link>
+                        <Link className="btn btn-light w-100" onClick={handleLogout}>Logout</Link>
+                      </div>
+                    )}
+                  </li>
+
+
                 </ul>
               </div>
             )}

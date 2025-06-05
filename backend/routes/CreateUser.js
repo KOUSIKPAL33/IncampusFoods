@@ -57,6 +57,7 @@ routers.get("/user", auth, async (req, res) => {
                 name: userData.name, 
                 cartItems: userData.shopping_cart,
                 mobileno:userData.mobileno,
+                email:userData.email,
                 addresses:userData.addresses,
             });
         } else {
