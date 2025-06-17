@@ -98,12 +98,12 @@ function Checkout() {
 
             if (response.status === 200) {
                 toast.success("Order placed successfully!",{
-                    autoClose:1400,
+                    autoClose:1000,
                 }
                 );
                 setTimeout(() => {
                     navigate("/Myorders");
-                }, 1500);
+                }, 1000);
             }
 
         } catch (err) {

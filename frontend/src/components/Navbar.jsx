@@ -2,16 +2,18 @@ import React, { useState, useEffect, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Login from "../screens/Login";
 import Signup from "../screens/Signup";
+import Forgotpassword from "../screens/Forgotpassword";
 import styles from "./Navbar.module.css";
 import baseurl from "../Url";
 import { cartcontext } from "../contexts/Contextprovider";
 import { userContext } from "../contexts/userContext";
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faUser,faSignOut, faReceipt, faL } from "@fortawesome/free-solid-svg-icons";
 import AdminLogin from "../admin/AdminLogin";
 
 
 const Navbar = () => {
-  const token = localStorage.getItem("authToken");
+  
   const { cart, dispatch } = useContext(cartcontext)
   const { user, dispatchUser } = useContext(userContext)
   const [showProfile, setShowProfile] = useState(false);
@@ -41,42 +43,52 @@ const Navbar = () => {
     setShowModal(false);
     navigate("/");
   };
+  
 
+useEffect(() => {
+  const token = localStorage.getItem("authToken");
+  if (!token) {
+    setIsLoggedIn(false);
+    localStorage.setItem("isLoggedIn", false);
+    return; 
+  }
 
-  useEffect(() => {
-    const fetchUserDetails = async () => {
-      if (isLoggedIn) {
-        try {
-          const response = await fetch(`${baseurl}/user`, {
-            method: "GET",
-            headers: {
-              Authorization: `Bearer ${token}`,
-              "Content-Type": "application/json",
-            },
-          });
+  const fetchUserDetails = async () => {
+    try {
+      const response = await fetch(`${baseurl}/user`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
 
-          if (response.ok) {
-            const data = await response.json();
-            dispatch({ type: "SetCart", payload: data.cartItems });
-            dispatchUser({
-              type: "SET_USER",
-              payload: {
-                name: data.name,
-                mobile: data.mobileno,
-                email:data.email,
-                addresses: data.addresses,
-              },
-            });
-          } else {
-            console.error("Failed to fetch user data");
-          }
-        } catch (error) {
-          console.error("Error fetching user data:", error);
-        }
+      if (response.ok) {
+        const data = await response.json();
+        dispatch({ type: "SetCart", payload: data.cartItems });
+        dispatchUser({
+          type: "SET_USER",
+          payload: {
+            name: data.name,
+            mobile: data.mobileno,
+            email: data.email,
+            addresses: data.addresses,
+          },
+        });
+      } else {
+        setIsLoggedIn(false);
+        console.error("Failed to fetch user data");
       }
-    };
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+      setIsLoggedIn(false);
+    }
+  };
+  if (isLoggedIn) {
     fetchUserDetails();
-  }, [isLoggedIn]);
+  }
+}, [isLoggedIn]);
+
 
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -119,13 +131,7 @@ const Navbar = () => {
               <li className="nav-item"><Link className="nav-link fs-5" to="/kathijunction">Kathijunction</Link> </li>
             </ul>
 
-            {!token ? (
-              <div className="d-flex gap-1">
-                <button className="btn btn-secondary" onClick={() => toggleModal("signup")}>Sign Up</button>
-                <button className="btn btn-primary" onClick={() => toggleModal("login")}>Login</button>
-                <button className="btn btn-danger" onClick={() => toggleModal("adminLogin")}>Admin</button>
-              </div>
-            ) : (
+            {isLoggedIn ? (
               <div>
                 <ul className="mt-2 d-flex gap-2">
                   <li className="position-relative">
@@ -145,17 +151,24 @@ const Navbar = () => {
                     {showProfile && (
                       <div
                         className="position-absolute top-100 end-0 bg-white border rounded shadow-sm text-dark mt-3"
-                        style={{ minWidth: "200px", zIndex: 10 }}
+                        style={{ minWidth: "180px", zIndex: 10 }}
                       >
-                        <Link className="btn btn-light w-100" to="  ">My Profile</Link>
-                        <Link className="btn btn-light w-100" to="/Myorders">My Orders</Link>
-                        <Link className="btn btn-light w-100" onClick={handleLogout}>Logout</Link>
+                        <Link className="btn btn-light w-100" to="  "><FontAwesomeIcon icon={faUser} className="me-2" /> My Profile</Link>
+                        <Link className="btn btn-light w-100" to="/Myorders"><FontAwesomeIcon icon={faReceipt} className="me-2" /> My Orders</Link>
+                        <Link className="btn btn-light w-100" onClick={handleLogout}><FontAwesomeIcon icon={faSignOut} className="me-2" /> Logout</Link>
                       </div>
                     )}
                   </li>
 
 
                 </ul>
+              </div>
+              
+            ) : (
+              <div className="d-flex gap-1">
+                <button className="btn btn-secondary" onClick={() => toggleModal("signup")}>Sign Up</button>
+                <button className="btn btn-primary" onClick={() => toggleModal("login")}>Login</button>
+                <button className="btn btn-danger" onClick={() => toggleModal("adminLogin")}>Admin</button>
               </div>
             )}
           </div>
@@ -171,11 +184,17 @@ const Navbar = () => {
                   onLoginSuccess={handleLoginSuccess}
                   switchToSignup={() => setActiveForm("signup")}
                   switchToadminlogin={() => setActiveForm("adminlogin")}
+                  switchToForgotpassord={() => setActiveForm("forgotpassword")}
                 />
               ) : activeForm === "signup" ? (
                 <Signup
                   switchToLogin={() => setActiveForm("login")}
                   onSignupSuccess={() => setShowModal(false)}
+                />
+              ): activeForm === "forgotpassword" ? (
+                <Forgotpassword
+                  switchToLogin={() => setActiveForm("login")}
+                  onForgotpasswordSuccess={() => setShowModal(false)}
                 />
               ) : (
                 <AdminLogin
