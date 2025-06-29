@@ -1,4 +1,6 @@
 const express = require('express');
+const path = require('path');
+
 const app = express();
 require('dotenv').config();
 const port = process.env.PORT || 5000;
@@ -26,6 +28,8 @@ app.use('/api/cart', require("./routes/cartRouter"));
 app.use('/api/address',require("./routes/addressRoter"));
 app.use('/api/', require("./routes/adminRouter"));
 app.use('/api/order',require("./routes/ordersRouter"));
+app.use('/image', express.static(path.join(__dirname, 'public/image')));
+
 
 
 app.listen(port, () => {
