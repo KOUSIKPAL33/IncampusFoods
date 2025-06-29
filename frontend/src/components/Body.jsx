@@ -1,127 +1,160 @@
 import React from 'react'
-import styles from "./body.module.css"
 
 function Body() {
   return (
-    <div className="container" style={{ marginTop: "100px" }}>
-      <section className="row">
-        <div className="col">
-          <div className={styles.faster}>More than Faster
-            <div className={`${styles.image} align-items-center`}>
-              <img src="./image/bodyimage/french-fries.svg" alt="" className={styles.faster_img} />
-            </div>
+    <div className="container mx-auto px-4 mt-5">
+      {/* Header Section */}
+      <section className="flex flex-col-reverse lg:flex-row items-center justify-between gap-10 bg-gradient-to-r from-orange-50 to-yellow-100 p-8 rounded-xl shadow-md">
+        <div className="w-full lg:w-1/2 space-y-6">
+          <div className="flex items-center text-3xl md:text-4xl font-bold text-[#f94a3d]">
+            <span className="mr-3">More than Faster</span>
+            <img
+              src="./image/bodyimage/french-fries.svg"
+              alt="French Fries"
+              className="w-12 h-12 md:w-16 md:h-16"
+            />
           </div>
-          <h1 className={styles.home_h1}>
+          <h1 className="text-4xl md:text-5xl font-extrabold text-gray-800 leading-tight">
             Get your cuisine <br />
             delivered right to <br />
-            <span style={{ color: " #f94a3d" }}>your door</span>
+            <span className="text-[#f94a3d]">your door</span>
           </h1>
-          <p className={styles.home_p}>
+          <p className="text-lg text-gray-700">
             Food that is delivered at the right time. The trendy food delivery
             partner. Good food is what we deliver. Your hunger companion.
           </p>
-          <button className='btn btn-secondary btn-lg'>Explore Food</button>
+          <button className="bg-[#f94a3d] text-white px-6 py-3 rounded-xl text-lg hover:bg-[#e03b2f] transition duration-300 shadow-lg hover:shadow-xl">
+            Explore Food
+          </button>
         </div>
-        <div className="col">
-          <img src="./image/bodyimage/delivery-guy.svg" alt="" className={styles.home_img} />
+        <div className="w-full lg:w-1/2">
+          <img src="./image/bodyimage/delivery-guy.svg" alt="Delivery Guy" className="w-full" />
         </div>
       </section>
 
-      <section className={styles.service}>
-        <div className="row container">
-          <div className="col">
-            <h2 className={styles.service_h2}>Why we are Best in our Town</h2>
-            <p className={styles.service_p}>
-              whole grains and low-fat dairy can help to reduce your risk of heart
-              disease by maintaining blood pressure and
+      {/* Services Section */}
+      <section className="mt-24 text-center">
+        <h2 className="text-3xl font-extrabold text-gray-800 mb-4">Why we are Best in our Town</h2>
+        <p className="text-gray-600 max-w-xl mx-auto mb-12">
+          Whole grains and low-fat dairy can help to reduce your risk of heart
+          disease by maintaining blood pressure and boosting immunity.
+        </p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 px-4">
+          {[
+            {
+              icon: "./image/bodyimage/meat-icon.svg",
+              title: "Choose your favorite food",
+            },
+            {
+              icon: "./image/bodyimage/delivery-icon.svg",
+              title: "Get delivery at your doorstep",
+            },
+            {
+              icon: "./image/bodyimage/phone-icon.svg",
+              title: "400+ Reviews on our app",
+            },
+          ].map((item, idx) => (
+            <div
+              key={idx}
+              className="bg-white hover:bg-[#fef3c7] border border-gray-200 rounded-2xl p-6 shadow-lg transition duration-300 ease-in-out"
+            >
+              <img src={item.icon} alt="" className="mx-auto mb-4 w-16 h-16" />
+              <h3 className="text-xl font-semibold text-[#f94a3d]">{item.title}</h3>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section className="mt-24 bg-orange-50 py-12 px-4 rounded-xl shadow-md">
+        <div className="flex flex-col lg:flex-row items-center gap-10">
+          {/* Image */}
+          <div className="w-full lg:w-1/2">
+            <img
+              src="./image/bodyimage/delivery-guy-2.svg"
+              alt="Delivery Guy"
+              className="w-full"
+            />
+          </div>
+
+          {/* Content */}
+          <div className="w-full lg:w-1/2 space-y-6">
+            <h2 className="text-3xl font-bold text-gray-800">
+              Take a look at the benefits we offer for you
+            </h2>
+            <p className="text-gray-700">
+              Good service means a friendly, welcoming experience. A restaurant owner
+              should not merely strive to avoid bad service — they should aim to create
+              a delightful experience for every customer.
             </p>
-          </div>
-          <div className="col">
-            <div className={styles.service_card}>
-              <img src="./image/bodyimage/meat-icon.svg" alt="" className={styles.service_img} />
-              <h3 className={styles.service_h3}>
-                Choose <br />
-                your favorite <br />
-                food
-              </h3>
-            </div>
-          </div>
-          <div className="col">
-            <div className={styles.service_card}>
-              <img src="./image/bodyimage/delivery-icon.svg" alt="" className={styles.service_img} />
-              <h3 className={styles.service_h3}>
-                Get delivery <br />
-                at your door <br />
-                step
-              </h3>
-            </div>
-          </div>
-          <div className="col">
-            <div className={styles.service_card}>
-              <img src="./image/bodyimage/phone-icon.svg" alt="" className={styles.service_img} />
-              <h3 className={styles.service_h3}>
-                We have <br />
-                400+ Review <br />
-                On our app
-              </h3>
-            </div>
-          </div>
-        </div>
-      </section>
 
-      <section className={styles.about}>
-        <div className="row container">
-          <div className="col">
-            <img src="./image/bodyimage/delivery-guy-2.svg" alt="" className={styles.about_img} />
-          </div>
-          <div className="col">
-            <h2 className={styles.about_h2}>Take a look at the benefits we offer for you</h2>
-            <p className={styles.about_p}>
-              Good service means a friendly, welcoming service. A restaurant owner
-              should not merely strive to avoid bad service,
-            </p>
-            <div className={styles.about_d_grid}>
-              <div className={styles.about_card}>
-                <img src="./image/bodyimage/car-icon.svg" alt="" />
-                <h4 className={styles.about_h4}>Free Home Delivary</h4>
-                <span className={styles.about_span}>For all orders</span>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              {/* Card 1 */}
+              <div className="bg-white p-4 rounded-xl shadow-md hover:shadow-xl transition">
+                <div className="flex items-center gap-4">
+                  <img src="./image/bodyimage/car-icon.svg" alt="" className="w-10 h-10" />
+                  <div>
+                    <h4 className="font-semibold text-[#f94a3d]">Free Home Delivery</h4>
+                    <span className="text-sm text-gray-500">For all orders</span>
+                  </div>
+                </div>
               </div>
-              <div className={styles.about_card}>
-                <img src="./image/bodyimage/dollar-icon.svg" alt="" />
-                <h4 className={styles.about_h4}>Return & Refund</h4>
-                <span className={styles.about_span}>Money Back Guarantee</span>
+
+              {/* Card 2 */}
+              <div className="bg-white p-4 rounded-xl shadow-md hover:shadow-xl transition">
+                <div className="flex items-center gap-4">
+                  <img src="./image/bodyimage/dollar-icon.svg" alt="" className="w-10 h-10" />
+                  <div>
+                    <h4 className="font-semibold text-[#f94a3d]">Return & Refund</h4>
+                    <span className="text-sm text-gray-500">Money Back Guarantee</span>
+                  </div>
+                </div>
               </div>
-              <div className={styles.about_card}>
-                <img src="./image/bodyimage/security-icon.svg" alt="" />
-                <h4 className={styles.about_h4}>Secure Payment</h4>
-                <span className={styles.about_span}>100% Secure Payment</span>
+
+              {/* Card 3 */}
+              <div className="bg-white p-4 rounded-xl shadow-md hover:shadow-xl transition">
+                <div className="flex items-center gap-4">
+                  <img src="./image/bodyimage/security-icon.svg" alt="" className="w-10 h-10" />
+                  <div>
+                    <h4 className="font-semibold text-[#f94a3d]">Secure Payment</h4>
+                    <span className="text-sm text-gray-500">100% Safe Transactions</span>
+                  </div>
+                </div>
               </div>
-              <div className={styles.about_card}>
-                <img src="./image/bodyimage/time-icon.svg" alt="" />
-                <h4 className={styles.about_h4}>Quality Support</h4>
-                <span className={styles.about_span}>Alway Online 24/7</span>
+
+              {/* Card 4 */}
+              <div className="bg-white p-4 rounded-xl shadow-md hover:shadow-xl transition">
+                <div className="flex items-center gap-4">
+                  <img src="./image/bodyimage/time-icon.svg" alt="" className="w-10 h-10" />
+                  <div>
+                    <h4 className="font-semibold text-[#f94a3d]">Quality Support</h4>
+                    <span className="text-sm text-gray-500">Always Online 24/7</span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      <section className='d-flex justify-content-around p-5 ' style={{backgroundColor:"#f8f8f8"}}>
-        <div>
-          <h1>1K+</h1>
-          <h4>User</h4>
+
+      {/* Stats Section */}
+      <section className="mt-24 bg-[#f8f8f8] py-10 flex flex-wrap justify-around text-center rounded-xl shadow-inner">
+        <div className="mb-6">
+          <h1 className="text-4xl font-extrabold text-[#f94a3d]">1K+</h1>
+          <h4 className="text-lg text-gray-700 font-medium">Users</h4>
         </div>
-        <div>
-          <h1>3</h1>
-          <h4>Best Shops</h4>
+        <div className="mb-6">
+          <h1 className="text-4xl font-extrabold text-[#f94a3d]">3</h1>
+          <h4 className="text-lg text-gray-700 font-medium">Best Shops</h4>
         </div>
-        <div>
-          <h1>2K+</h1>
-          <h4>Food Delivered</h4>
+        <div className="mb-6">
+          <h1 className="text-4xl font-extrabold text-[#f94a3d]">2K+</h1>
+          <h4 className="text-lg text-gray-700 font-medium">Food Delivered</h4>
         </div>
       </section>
-
     </div>
+
+
   )
 }
 

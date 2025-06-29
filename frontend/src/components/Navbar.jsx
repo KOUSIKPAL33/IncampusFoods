@@ -17,6 +17,8 @@ const Navbar = () => {
   const { cart, dispatch } = useContext(cartcontext)
   const { user, dispatchUser } = useContext(userContext)
   const [showProfile, setShowProfile] = useState(false);
+  const [showMobileNav, setShowMobileNav] = useState(false);
+
 
   const navigate = useNavigate();
 
@@ -129,6 +131,7 @@ useEffect(() => {
               <li className="nav-item"><Link className="nav-link fs-5" to="/yummpy">Yummpy</Link></li>
               <li className="nav-item"><Link className="nav-link fs-5" to="/dominos">Domino's</Link></li>
               <li className="nav-item"><Link className="nav-link fs-5" to="/kathijunction">Kathijunction</Link> </li>
+              <li className="nav-item"><Link className="nav-link fs-5" to="/contact">Contact us</Link> </li>
             </ul>
 
             {isLoggedIn ? (

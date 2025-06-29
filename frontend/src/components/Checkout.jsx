@@ -14,8 +14,8 @@ import baseurl from '../Url';
 function Checkout() {
     const { user } = useContext(userContext);
     const { cart } = useContext(cartcontext)
+    const [addresses, setAddresses] = useState(user.addresses || []);
     const [isFormOpen, setIsFormOpen] = useState(false);
-    const [addresses, setAddresses] = useState(user.addresses);
     const [address, setAddress] = useState({ name: "", mobileno: "", location: "" });
     const navigate = useNavigate();
 
@@ -24,6 +24,8 @@ function Checkout() {
     const deliveryfee = ((itemTotal >= 300) ? 0 : 30);
     const grandTotal = (itemTotal) + gst + deliveryfee;
     const token = localStorage.getItem('authToken');
+
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -112,6 +114,7 @@ function Checkout() {
         }
     };
 
+    
 
     return (
         <div className='m-4 d-flex gap-4 flex-row'>

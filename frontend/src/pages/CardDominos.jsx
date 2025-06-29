@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react'
-import { toast } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 import axios from 'axios';
 import { cartcontext } from '../contexts/Contextprovider';
 import baseurl from '../Url';
@@ -55,14 +55,13 @@ function CardDominos(props) {
       );
       if (response.data.success) {
         dispatch({ type: "Add", product: props });
-        toast.success("Item added to cart!", { autoClose: 1500, position: "bottom-right" });
+        toast.success("Item added to cart!",{autoClose: 1500,});
       }
 
     } catch (error) {
       if (error.response && error.response.status === 400 && error.response.data.message === "Item already in cart") {
-        toast.info('Item is already in the cart.');
+        toast.info('Item is already in the cart.',{autoClose: 1500,});
       } else {
-        console.error("Error adding to cart:", error);
         toast.error('Something went wrong. Please try again.');
       }
     }
@@ -72,7 +71,7 @@ function CardDominos(props) {
   return (
     <>
       <div style={{ width: '19rem' }} className='border border-primary shadow p-3 mb-5 bg-body rounded'>
-        <img src={props.imgSrc} className="card-img-top" style={{ height: '10rem', }} alt="kousik" />
+        <img src={`${baseurl.replace('/api', '')}/${props.imgSrc}`} className="card-img-top" style={{ height: '10rem', }} alt="kousik" />
         <div className="card-body">
           <h5 className="card-title">{props.name}</h5>
           <p className="card-text">Some quick example text.</p>

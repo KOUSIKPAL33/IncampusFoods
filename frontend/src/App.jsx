@@ -9,6 +9,7 @@ import { ToastContainer } from 'react-toastify'
 import Checkout from './components/Checkout'
 import AdminHome from './admin/AdminHome'
 import Myorders from './components/Myorders'
+import Contactus from "./pages/Contactus"
 
 function App() {
   const token = localStorage.getItem("authToken");
@@ -26,6 +27,7 @@ function App() {
             <Route exact path='/Myorders' element={ token? <Myorders />:<Home/>} />
             <Route exact path='/Checkout' element={token?<Checkout />:<Home/>} />
             <Route exact path='/admin' element={<AdminHome />} />
+            <Route exact path='/contact' element ={<Contactus/>}/>
           </Routes>
         </div>
       </Router>
